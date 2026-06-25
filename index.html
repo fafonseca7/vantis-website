@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vantis - Operational Consulting for Founders</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --soil:       #1a1208;
+      --soil-2:     #251a0a;
+      --cream:      #faf4e8;
+      --cream-2:    #f2e9d4;
+      --cream-3:    #e8ddc0;
+      --grove:      #2d7a4f;
+      --grove-mid:  #3a9e66;
+      --grove-light:#e6f5ec;
+      --sun:        #d4831a;
+      --muted:      rgba(26,18,8,0.62);
+      --rule:       rgba(26,18,8,0.1);
+      --rule-dark:  rgba(250,244,232,0.1);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      font-size: 18px;
+      background: var(--cream);
+      color: var(--soil);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 52px;
+      background: rgba(250,244,232,0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--rule);
+    }
+    .nav-brand { display: flex; flex-direction: column; gap: 3px; text-decoration: none; }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; font-weight: 500;
+      letter-spacing: 0.02em; color: var(--soil); line-height: 1;
+    }
+    .nav-tagline {
+      font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.16em; text-transform: uppercase; color: var(--grove);
+    }
+    .nav-right { display: flex; align-items: center; gap: 32px; }
+    .lang-switch { display: flex; align-items: center; gap: 8px; }
+    .lang-btn {
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em;
+      background: none; border: none; cursor: pointer;
+      color: rgba(26,18,8,0.4); padding: 3px 0;
+      border-bottom: 1.5px solid transparent;
+      transition: color 0.18s, border-color 0.18s;
+    }
+    .lang-btn.active { color: var(--soil); border-bottom-color: var(--grove); }
+    .lang-btn:hover:not(.active) { color: var(--soil); }
+    .lang-sep { font-size: 0.66rem; color: rgba(26,18,8,0.2); }
+    .nav-cta {
+      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--cream);
+      background: var(--grove);
+      text-decoration: none; padding: 10px 22px;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--grove-mid); }
+
+    /* ── HERO DIAGNOSTIC ── */
+    .hero-diag {
+      height: 100vh; min-height: 680px;
+      display: flex; flex-direction: column;
+      background: var(--soil);
+      position: relative; overflow: hidden;
+    }
+    /* subtle texture */
+    .hero-diag::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background-image: radial-gradient(circle, rgba(250,244,232,0.03) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+    .hero-diag-top {
+      flex-shrink: 0; padding: 116px 64px 0;
+      z-index: 2; pointer-events: none;
+    }
+    .hero-label {
+      font-size: 0.74rem; font-weight: 600;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--grove-mid); margin-bottom: 22px; display: block;
+    }
+    .hero-diag-top h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 5vw, 5rem);
+      font-weight: 400; line-height: 1.1;
+      color: var(--cream); margin-bottom: 18px;
+    }
+    .hero-diag-top h1 em { font-style: italic; color: var(--grove-mid); }
+    .hero-hint {
+      font-size: 1.05rem; font-weight: 300;
+      color: rgba(250,244,232,0.55); letter-spacing: 0.01em;
+    }
+
+    /* panels */
+    .hero-diag-panels {
+      flex: 1; display: flex;
+      margin-top: 48px;
+      border-top: 1px solid rgba(250,244,232,0.07);
+      overflow: hidden;
+    }
+    .diag-panel {
+      flex: 1;
+      border-right: 1px solid rgba(250,244,232,0.07);
+      cursor: pointer; position: relative;
+      transition: flex 0.55s cubic-bezier(0.4,0,0.2,1), background 0.3s;
+      background: transparent; display: flex; flex-direction: column;
+    }
+    .diag-panel:last-child { border-right: none; }
+    .diag-panel:hover   { flex: 2.6; background: rgba(45,122,79,0.07); }
+    .diag-panel.active  { flex: 2.6; background: rgba(45,122,79,0.12); border-right-color: rgba(45,122,79,0.3); }
+    .diag-panel.active::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; bottom: 0; width: 2px;
+      background: var(--grove-mid);
+    }
+    .panel-inner {
+      display: flex; flex-direction: column;
+      height: 100%; padding: 44px 38px 38px;
+    }
+    .panel-num {
+      font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.18em; color: rgba(58,158,102,0.7);
+      margin-bottom: 20px; display: block;
+    }
+    .panel-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.7rem, 2.4vw, 2.6rem);
+      font-weight: 400; color: var(--cream);
+      line-height: 1.05; margin-bottom: 10px; transition: color 0.25s;
+    }
+    .diag-panel.active .panel-name { color: var(--grove-mid); }
+    .panel-tagline {
+      font-size: 0.9rem; color: rgba(250,244,232,0.4);
+      font-weight: 300; transition: color 0.25s;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .diag-panel:hover .panel-tagline,
+    .diag-panel.active .panel-tagline { color: rgba(250,244,232,0.55); }
+
+    /* pain list */
+    .panel-pains {
+      list-style: none; margin-top: 28px; flex: 1;
+      display: flex; flex-direction: column;
+      opacity: 0; transform: translateY(10px);
+      transition: opacity 0.35s 0.1s, transform 0.35s 0.1s;
+      pointer-events: none;
+    }
+    .diag-panel:hover .panel-pains,
+    .diag-panel.active .panel-pains { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .panel-pains li {
+      font-size: 0.96rem; color: rgba(250,244,232,0.55);
+      line-height: 1.55; padding: 12px 0;
+      border-bottom: 1px solid rgba(250,244,232,0.06);
+      display: flex; align-items: flex-start; gap: 10px;
+      cursor: pointer; transition: color 0.18s;
+    }
+    .panel-pains li:first-child { border-top: 1px solid rgba(250,244,232,0.06); }
+    .panel-pains li::before {
+      content: '-'; color: rgba(58,158,102,0.45);
+      flex-shrink: 0; font-size: 0.8rem; margin-top: 2px;
+    }
+    .panel-pains li:hover { color: rgba(250,244,232,0.9); }
+    .panel-pains li.checked { color: rgba(250,244,232,0.95); }
+    .panel-pains li.checked::before { color: var(--grove-mid); content: '✓'; }
+
+    .panel-select-hint {
+      margin-top: 24px; font-size: 0.73rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(58,158,102,0.4);
+      opacity: 0; transition: opacity 0.3s 0.15s;
+    }
+    .diag-panel:hover:not(.active) .panel-select-hint { opacity: 1; }
+    .diag-panel.active .panel-select-hint { opacity: 1; color: rgba(58,158,102,0.7); }
+
+    .panel-check {
+      width: 22px; height: 22px;
+      border: 1.5px solid rgba(58,158,102,0.35); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      position: absolute; top: 40px; right: 34px;
+      transition: all 0.25s; opacity: 0;
+    }
+    .diag-panel:hover .panel-check { opacity: 1; }
+    .diag-panel.active .panel-check { opacity: 1; background: var(--grove-mid); border-color: var(--grove-mid); }
+    .panel-check svg { width: 10px; height: 10px; }
+
+    /* CTA bar */
+    .hero-diag-cta {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: var(--grove);
+      transform: translateY(100%);
+      transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+      z-index: 10;
+    }
+    .hero-diag-cta.visible { transform: translateY(0); }
+    .cta-bar-inner {
+      max-width: 1000px; margin: 0 auto;
+      padding: 18px 52px;
+      display: flex; align-items: center; justify-content: space-between; gap: 28px;
+    }
+    .cta-summary { font-size: 1rem; font-weight: 400; color: rgba(250,244,232,0.78); flex: 1; }
+    .cta-summary strong { color: var(--cream); font-weight: 600; }
+    .btn-cta-diag {
+      display: inline-block; background: var(--cream); color: var(--grove);
+      font-size: 0.82rem; font-weight: 700;
+      letter-spacing: 0.07em; text-transform: uppercase;
+      padding: 13px 26px; text-decoration: none; white-space: nowrap;
+      transition: background 0.2s; flex-shrink: 0;
+    }
+    .btn-cta-diag:hover { background: var(--cream-2); }
+
+    /* scroll hint */
+    .scroll-hint {
+      position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      opacity: 0.18; transition: opacity 0.4s; z-index: 2; pointer-events: none;
+    }
+    .scroll-hint span { font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream); }
+    .scroll-hint-line {
+      width: 1px; height: 30px;
+      background: linear-gradient(to bottom, rgba(250,244,232,0.6), transparent);
+      animation: scrollPulse 2.2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+    /* ── DIVIDER ── */
+    .divider { width: 100%; border: none; border-top: 1px solid var(--rule); margin: 0; }
+
+    /* ── SECTIONS ── */
+    .section { max-width: 960px; margin: 0 auto; padding: 112px 52px; }
+    .section-label {
+      font-size: 0.76rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--grove); margin-bottom: 18px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 3.4rem);
+      font-weight: 400; color: var(--soil);
+      margin-bottom: 24px; line-height: 1.2;
+    }
+    .section-body {
+      font-size: 1.1rem; color: var(--muted);
+      max-width: 580px; line-height: 1.85;
+    }
+
+    /* ── PILLARS GRID ── */
+    .pillars-intro { margin-bottom: 72px; }
+    .pillars-grid {
+      display: grid; grid-template-columns: repeat(2,1fr);
+      gap: 1px; background: var(--rule); border: 1px solid var(--rule);
+    }
+    .pillar { background: var(--cream); padding: 52px 44px; transition: background 0.22s; }
+    .pillar:hover { background: var(--grove-light); }
+    .pillar-number {
+      font-size: 0.74rem; font-weight: 700; letter-spacing: 0.16em;
+      color: var(--grove); margin-bottom: 20px;
+    }
+    .pillar-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.95rem; font-weight: 400; color: var(--soil); margin-bottom: 16px;
+    }
+    .pillar-desc { font-size: 1.02rem; color: var(--muted); line-height: 1.78; }
+
+    /* ── EMPATHY BAND ── */
+    .empathy-band {
+      background: var(--grove-light);
+      border-top: 1px solid rgba(45,122,79,0.15);
+      border-bottom: 1px solid rgba(45,122,79,0.15);
+      padding: 64px 52px; text-align: center;
+    }
+    .empathy-band blockquote {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+      font-weight: 400; font-style: italic;
+      color: var(--soil); line-height: 1.5;
+      max-width: 760px; margin: 0 auto;
+    }
+    .empathy-band blockquote em { color: var(--grove); font-style: normal; font-weight: 500; }
+
+    /* ── URGENT ── */
+    .urgent-section { background: var(--cream-2); }
+    .urgent-inner { max-width: 960px; margin: 0 auto; padding: 112px 52px; }
+    .urgent-row { display: grid; grid-template-columns: 1fr 1fr; gap: 88px; align-items: start; }
+    .urgent-right p { font-size: 1.08rem; color: var(--muted); line-height: 1.88; margin-bottom: 26px; }
+    .urgent-right p:last-child { margin-bottom: 0; }
+    .pillar-select-label {
+      font-size: 0.76rem; font-weight: 700; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 14px; display: block;
+    }
+    .pillar-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+    .pillar-tag {
+      font-size: 0.84rem; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; padding: 10px 20px;
+      border: 1.5px solid var(--rule); background: var(--cream);
+      color: var(--muted); cursor: pointer; transition: all 0.18s; user-select: none;
+    }
+    .pillar-tag:hover, .pillar-tag.active { background: var(--grove); color: var(--cream); border-color: var(--grove); }
+
+    /* ── PRICING ── */
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin-top: 60px;
+    }
+    .pricing-card { background: var(--cream); padding: 44px 36px; display: flex; flex-direction: column; }
+    .pricing-card.featured { background: var(--soil); }
+    .pricing-tier {
+      font-size: 0.74rem; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 22px;
+    }
+    .pricing-card.featured .pricing-tier { color: rgba(250,244,232,0.5); }
+    .pricing-name {
+      font-family: 'Playfair Display', serif; font-size: 1.7rem;
+      font-weight: 400; color: var(--soil); margin-bottom: 14px;
+    }
+    .pricing-card.featured .pricing-name { color: var(--cream); }
+    .pricing-desc { font-size: 0.98rem; color: var(--muted); line-height: 1.72; margin-bottom: 28px; flex: 1; }
+    .pricing-card.featured .pricing-desc { color: rgba(250,244,232,0.66); }
+    .price-blurred-wrap { margin-top: auto; }
+    .price-blurred {
+      display: inline-block; font-family: 'Playfair Display', serif;
+      font-size: 2.1rem; font-weight: 500; color: var(--soil); line-height: 1.15;
+    }
+    .price-blurred .price-from { display: block; font-family: 'Inter', sans-serif; font-size: 0.76rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+    .price-blurred .price-unit { font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 400; color: var(--muted); }
+    .pricing-card.featured .price-blurred { color: var(--cream); }
+    .pricing-card.featured .price-blurred .price-from,
+    .pricing-card.featured .price-blurred .price-unit { color: rgba(250,244,232,0.62); }
+    .price-note { font-size: 0.82rem; font-weight: 500; color: var(--muted); margin-top: 10px; letter-spacing: 0.02em; }
+    .pricing-card.featured .price-note { color: rgba(250,244,232,0.48); }
+
+    /* ── EXPLORATORY WIN BOX ── */
+    .exploratory-box {
+      margin-top: 60px;
+      background: var(--grove);
+      padding: 52px;
+      display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center;
+    }
+    .exp-label {
+      font-size: 0.74rem; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(250,244,232,0.72); margin-bottom: 12px;
+    }
+    .exp-title {
+      font-family: 'Playfair Display', serif; font-size: 1.7rem;
+      font-weight: 400; color: var(--cream); margin-bottom: 14px;
+    }
+    .exp-desc { font-size: 1.02rem; color: rgba(250,244,232,0.8); line-height: 1.78; max-width: 480px; }
+    .exp-desc strong { color: var(--cream); font-weight: 600; }
+    .exp-price-block { text-align: right; white-space: nowrap; }
+    .exp-price {
+      font-family: 'Playfair Display', serif; font-size: 2.9rem;
+      font-weight: 400; color: var(--cream); line-height: 1;
+    }
+    .exp-vat { font-size: 0.86rem; color: rgba(250,244,232,0.62); margin-top: 8px; }
+    .exp-deduct { font-size: 0.86rem; color: rgba(250,244,232,0.88); margin-top: 6px; }
+
+    /* ── APPROACH ── */
+    .about-row { display: grid; grid-template-columns: 1fr 1fr; gap: 88px; align-items: start; }
+    .about-list { margin-top: 40px; }
+    .about-item { display: flex; gap: 22px; padding: 26px 0; border-bottom: 1px solid var(--rule); }
+    .about-item:first-child { border-top: 1px solid var(--rule); }
+    .about-num {
+      font-size: 0.74rem; font-weight: 700; letter-spacing: 0.12em;
+      color: var(--grove); flex-shrink: 0; padding-top: 5px; min-width: 28px;
+    }
+    .about-text strong { display: block; font-size: 1.08rem; font-weight: 600; color: var(--soil); margin-bottom: 7px; }
+    .about-text span { font-size: 0.98rem; color: var(--muted); line-height: 1.72; }
+
+    /* ── CONTACT SECTION ── */
+    .contact-section { background: var(--soil-2); padding: 112px 52px; position: relative; overflow: hidden; }
+    .contact-section::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(58,158,102,0.04) 1px, transparent 1px);
+      background-size: 32px 32px; pointer-events: none;
+    }
+    .contact-inner {
+      max-width: 960px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 88px; align-items: start; position: relative;
+    }
+    .contact-left .section-label { color: var(--grove-mid); }
+    .contact-left h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
+      font-weight: 400; color: var(--cream);
+      margin-bottom: 22px; line-height: 1.15;
+    }
+    .contact-left h2 em { font-style: italic; color: var(--grove-mid); }
+    .contact-left p {
+      font-size: 1.08rem; color: rgba(250,244,232,0.6);
+      line-height: 1.82; margin-bottom: 36px; max-width: 400px;
+    }
+    .contact-trust { display: flex; flex-direction: column; gap: 14px; }
+    .contact-trust-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: 0.94rem; color: rgba(250,244,232,0.55); line-height: 1.5;
+    }
+    .contact-trust-item::before {
+      content: ''; width: 5px; height: 5px; border-radius: 50%;
+      background: var(--grove-mid); flex-shrink: 0; margin-top: 7px; opacity: 0.8;
+    }
+    .contact-form { display: flex; flex-direction: column; gap: 10px; }
+    .form-field {
+      background: rgba(250,244,232,0.05);
+      border: 1px solid rgba(250,244,232,0.1);
+      padding: 15px 17px;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem; color: var(--cream);
+      outline: none; transition: border-color 0.2s, background 0.2s;
+      width: 100%; -webkit-appearance: none;
+    }
+    .form-field::placeholder { color: rgba(250,244,232,0.22); }
+    .form-field:focus { border-color: rgba(58,158,102,0.55); background: rgba(250,244,232,0.07); }
+    .form-field option { background: var(--soil-2); color: var(--cream); }
+    textarea.form-field { resize: vertical; min-height: 90px; line-height: 1.65; }
+    .form-submit {
+      background: var(--grove); color: var(--cream);
+      border: none; padding: 15px 30px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.86rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      cursor: pointer; align-self: flex-start;
+      transition: background 0.2s, transform 0.15s; margin-top: 6px;
+    }
+    .form-submit:hover { background: var(--grove-mid); transform: translateY(-1px); }
+    .form-note { font-size: 0.82rem; color: rgba(250,244,232,0.32); margin-top: 4px; }
+    .form-success {
+      display: none; padding: 16px 0;
+      font-size: 1rem; color: var(--grove-mid);
+      font-family: 'Playfair Display', serif; font-style: italic;
+    }
+
+    /* shared btn */
+    .btn-primary {
+      display: inline-block; background: var(--soil); color: var(--cream);
+      font-size: 0.85rem; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; padding: 14px 34px; text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--soil-2); transform: translateY(-1px); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 40px 52px; display: flex;
+      justify-content: space-between; align-items: center;
+      border-top: 1px solid var(--rule); max-width: 960px; margin: 0 auto;
+    }
+    .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 400; color: var(--soil); }
+    .footer-copy { font-size: 0.84rem; color: var(--muted); }
+
+    /* ── POLISH ── */
+    .section-title, .contact-left h2, .hero-diag-top h1, .empathy-band blockquote { text-wrap: balance; }
+    .section-body, .pillar-desc, .pricing-desc, .exp-desc, .urgent-right p, .about-text span { text-wrap: pretty; }
+
+    /* refined card interactions */
+    .pillars-grid, .pricing-grid { overflow: hidden; }
+    .pillar { transition: background 0.25s ease, transform 0.25s ease; }
+    .pillar:hover { transform: translateY(-3px); }
+    .pricing-card { transition: transform 0.25s ease, box-shadow 0.25s ease; position: relative; }
+    .pricing-card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px -22px rgba(26,18,8,0.45); z-index: 2; }
+    .pricing-card.featured:hover { box-shadow: 0 22px 48px -20px rgba(26,18,8,0.7); }
+
+    /* buttons: gentle press + consistent easing */
+    .nav-cta, .btn-cta-diag, .form-submit, .btn-primary { transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease; }
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 18px -10px rgba(45,122,79,0.8); }
+    .btn-cta-diag:hover { transform: translateY(-1px); }
+    .nav-cta:active, .btn-cta-diag:active, .form-submit:active, .btn-primary:active { transform: translateY(0); }
+
+    /* accessible focus — visible only for keyboard users */
+    a:focus-visible, button:focus-visible, .form-field:focus-visible,
+    .pillar-tag:focus-visible, .diag-panel:focus-visible {
+      outline: 2px solid var(--grove-mid); outline-offset: 3px; border-radius: 2px;
+    }
+    .form-field:focus-visible { outline-offset: 0; }
+
+    /* crisper rendering */
+    body { text-rendering: optimizeLegibility; -moz-osx-font-smoothing: grayscale; }
+    ::selection { background: rgba(58,158,102,0.25); color: var(--soil); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 740px) {
+      body { font-size: 17px; }
+      nav { padding: 14px 22px; }
+      .hero-diag-top { padding: 92px 24px 0; }
+      .hero-diag-panels { flex-direction: column; }
+      .diag-panel { flex: none !important; min-height: 110px; border-right: none; border-bottom: 1px solid rgba(250,244,232,0.07); }
+      .diag-panel:hover, .diag-panel.active { min-height: 280px; }
+      .panel-pains { opacity: 1; transform: none; display: none; }
+      .diag-panel.active .panel-pains { display: flex; }
+      .cta-bar-inner { padding: 14px 22px; flex-direction: column; align-items: flex-start; gap: 10px; }
+      .section, .urgent-inner { padding: 80px 24px; }
+      .pillars-grid { grid-template-columns: 1fr; }
+      .urgent-row, .about-row, .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .exploratory-box { grid-template-columns: 1fr; gap: 28px; padding: 36px 28px; }
+      .exp-price-block { text-align: left; }
+      .empathy-band { padding: 52px 24px; }
+      .contact-section { padding: 80px 24px; }
+      .nav-right { gap: 16px; }
+      footer { flex-direction: column; gap: 10px; padding: 28px 22px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-brand">
+      <span class="nav-logo">Vantis</span>
+      <span class="nav-tagline" data-i18n="navTagline">Structure. Direction. Scale.</span>
+    </a>
+    <div class="nav-right">
+      <div class="lang-switch">
+        <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+        <span class="lang-sep">/</span>
+        <button class="lang-btn" id="btnPT" onclick="setLang('pt')">PT</button>
+      </div>
+      <a href="#contact" class="nav-cta" data-i18n="navCta">Get in touch</a>
+    </div>
+  </nav>
+
+  <!-- HERO DIAGNOSTIC -->
+  <section class="hero-diag" id="top">
+    <div class="hero-diag-top">
+      <span class="hero-label" data-i18n="heroLabel">Operational Consulting - Vantis</span>
+      <h1 data-i18n-html="heroH1">You already know<br>something isn't <em>working.</em></h1>
+      <p class="hero-hint" data-i18n="heroHint">Select where the weight is right now.</p>
+    </div>
+
+    <div class="hero-diag-panels">
+
+      <div class="diag-panel" data-pillar-en="Money" data-pillar-pt="Dinheiro" onclick="selectPanel(this)">
+        <div class="panel-check">
+          <svg viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#1a1208" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="panel-inner">
+          <span class="panel-num">01</span>
+          <h2 class="panel-name" data-i18n="p1Name">Money</h2>
+          <p class="panel-tagline" data-i18n="p1Tagline">Capital, pricing & financial clarity</p>
+          <ul class="panel-pains">
+            <li onclick="togglePain(event,this)" data-i18n="p1Pain1">I don't know how long my runway lasts</li>
+            <li onclick="togglePain(event,this)" data-i18n="p1Pain2">I know I'm undercharging but don't know how to fix it</li>
+            <li onclick="togglePain(event,this)" data-i18n="p1Pain3">Revenue exists but margins are unclear</li>
+            <li onclick="togglePain(event,this)" data-i18n="p1Pain4">I need funding but don't know where to start</li>
+          </ul>
+          <p class="panel-select-hint" data-i18n="panelHint">- tap to select</p>
+        </div>
+      </div>
+
+      <div class="diag-panel" data-pillar-en="Idea" data-pillar-pt="Ideia" onclick="selectPanel(this)">
+        <div class="panel-check">
+          <svg viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#1a1208" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="panel-inner">
+          <span class="panel-num">02</span>
+          <h2 class="panel-name" data-i18n="p2Name">Idea</h2>
+          <p class="panel-tagline" data-i18n="p2Tagline">Positioning, differentiation & market fit</p>
+          <ul class="panel-pains">
+            <li onclick="togglePain(event,this)" data-i18n="p2Pain1">My offer isn't landing with the right people</li>
+            <li onclick="togglePain(event,this)" data-i18n="p2Pain2">I can't articulate what makes me different</li>
+            <li onclick="togglePain(event,this)" data-i18n="p2Pain3">I'm unsure if the market actually wants this</li>
+            <li onclick="togglePain(event,this)" data-i18n="p2Pain4">My positioning feels scattered and inconsistent</li>
+          </ul>
+          <p class="panel-select-hint" data-i18n="panelHint">- tap to select</p>
+        </div>
+      </div>
+
+      <div class="diag-panel" data-pillar-en="Operation" data-pillar-pt="Operação" onclick="selectPanel(this)">
+        <div class="panel-check">
+          <svg viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#1a1208" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="panel-inner">
+          <span class="panel-num">03</span>
+          <h2 class="panel-name" data-i18n="p3Name">Operation</h2>
+          <p class="panel-tagline" data-i18n="p3Tagline">Systems, team & execution clarity</p>
+          <ul class="panel-pains">
+            <li onclick="togglePain(event,this)" data-i18n="p3Pain1">I'm doing everything myself and burning out</li>
+            <li onclick="togglePain(event,this)" data-i18n="p3Pain2">My processes break when volume increases</li>
+            <li onclick="togglePain(event,this)" data-i18n="p3Pain3">I don't have the right team or tools in place</li>
+            <li onclick="togglePain(event,this)" data-i18n="p3Pain4">Execution is inconsistent week to week</li>
+          </ul>
+          <p class="panel-select-hint" data-i18n="panelHint">- tap to select</p>
+        </div>
+      </div>
+
+      <div class="diag-panel" data-pillar-en="Revenue" data-pillar-pt="Receita" onclick="selectPanel(this)">
+        <div class="panel-check">
+          <svg viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#1a1208" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="panel-inner">
+          <span class="panel-num">04</span>
+          <h2 class="panel-name" data-i18n="p4Name">Revenue</h2>
+          <p class="panel-tagline" data-i18n="p4Tagline">Conversion, sales motion & recurring income</p>
+          <ul class="panel-pains">
+            <li onclick="togglePain(event,this)" data-i18n="p4Pain1">I have leads but struggle to convert them</li>
+            <li onclick="togglePain(event,this)" data-i18n="p4Pain2">My income is unpredictable month to month</li>
+            <li onclick="togglePain(event,this)" data-i18n="p4Pain3">I don't have a repeatable sales process</li>
+            <li onclick="togglePain(event,this)" data-i18n="p4Pain4">I deliver real value but I can't charge what it's worth</li>
+          </ul>
+          <p class="panel-select-hint" data-i18n="panelHint">- tap to select</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="hero-diag-cta" id="diagCta">
+      <div class="cta-bar-inner">
+        <span class="cta-summary" id="ctaSummary"></span>
+        <a href="#contact" class="btn-cta-diag" data-i18n="ctaBtn">Book Exploratory Session - 312€ + VAT →</a>
+      </div>
+    </div>
+
+    <div class="scroll-hint" id="scrollHint">
+      <div class="scroll-hint-line"></div>
+      <span data-i18n="scrollHint">Scroll</span>
+    </div>
+  </section>
+
+  <!-- EMPATHY BAND -->
+  <div class="empathy-band">
+    <blockquote data-i18n-html="empathyQuote">
+      "Most founders don't have a strategy problem. They have a <em>clarity</em> problem — and they've been carrying it alone for too long."
+    </blockquote>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- PILLARS -->
+  <section id="pillars" class="section">
+    <div class="pillars-intro">
+      <p class="section-label" data-i18n="pillarsLabel">The Four Pillars</p>
+      <h2 class="section-title" data-i18n-html="pillarsTitle">Every wall a founder hits<br>comes from one of four places.</h2>
+      <p class="section-body" data-i18n="pillarsBody">Most founders are surprised by which one is actually blocking them. That's exactly what we find together in the first session.</p>
+    </div>
+    <div class="pillars-grid">
+      <div class="pillar">
+        <p class="pillar-number">01</p>
+        <h3 class="pillar-name" data-i18n="pillar1Name">Money</h3>
+        <p class="pillar-desc" data-i18n="pillar1Desc">Capital structure, burn rate, funding pathways, financial model clarity. Whether you're pre-revenue or in growth mode, money problems are always solvable with the right architecture.</p>
+      </div>
+      <div class="pillar">
+        <p class="pillar-number">02</p>
+        <h3 class="pillar-name" data-i18n="pillar2Name">Idea</h3>
+        <p class="pillar-desc" data-i18n="pillar2Desc">Positioning, differentiation, market fit, and creative direction. A strong idea that isn't shaped for the market stays invisible. I sharpen it until it lands.</p>
+      </div>
+      <div class="pillar">
+        <p class="pillar-number">03</p>
+        <h3 class="pillar-name" data-i18n="pillar3Name">Operation</h3>
+        <p class="pillar-desc" data-i18n="pillar3Desc">Systems, team, process, tools, and execution rhythm. Growth without operational clarity creates chaos. I build the structure that lets you scale without breaking.</p>
+      </div>
+      <div class="pillar">
+        <p class="pillar-number">04</p>
+        <h3 class="pillar-name" data-i18n="pillar4Name">Revenue</h3>
+        <p class="pillar-desc" data-i18n="pillar4Desc">Pricing, conversion, sales motion, and recurring income. Revenue is the measure of everything working together. I connect the dots between the value you deliver and the income it earns.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- URGENT NEED -->
+  <div class="urgent-section">
+    <div class="urgent-inner" id="urgency">
+      <div class="urgent-row">
+        <div class="urgent-left">
+          <p class="section-label" data-i18n="urgentLabel">Your Urgent Need</p>
+          <h2 class="section-title" data-i18n-html="urgentTitle">You've been carrying this.<br>It's time to put it down.</h2>
+          <span class="pillar-select-label" data-i18n="urgentSelectLabel">What's pressing hardest right now?</span>
+          <div class="pillar-tags">
+            <span class="pillar-tag" data-i18n="p1Name" onclick="toggleTag(this)">Money</span>
+            <span class="pillar-tag" data-i18n="p2Name" onclick="toggleTag(this)">Idea</span>
+            <span class="pillar-tag" data-i18n="p3Name" onclick="toggleTag(this)">Operation</span>
+            <span class="pillar-tag" data-i18n="p4Name" onclick="toggleTag(this)">Revenue</span>
+          </div>
+          <a href="#contact" class="btn-primary" data-i18n="urgentBtn">Let's talk about it →</a>
+        </div>
+        <div class="urgent-right">
+          <p data-i18n="urgentP1">You don't need a generalist. You need someone who sits down, looks at your specific situation, and tells you the truth - including the parts that are uncomfortable to hear.</p>
+          <p data-i18n="urgentP2">Every engagement starts with one honest conversation. No templates, no vague frameworks. Just a direct look at where you are, what's blocking you, and what to do next.</p>
+          <p data-i18n="urgentP3">The plan is built entirely around your reality - your stage, your product, your constraints. Nothing borrowed from another founder's playbook.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- APPROACH -->
+  <section class="section">
+    <div class="about-row">
+      <div>
+        <p class="section-label" data-i18n="approachLabel">How I Work</p>
+        <h2 class="section-title" data-i18n-html="approachTitle">Honest diagnosis.<br>Real work together.</h2>
+        <p class="section-body" data-i18n="approachBody">I don't show up with a slide deck and a framework. I show up ready to listen - then ready to do the work alongside you until it actually moves.</p>
+      </div>
+      <div class="about-list">
+        <div class="about-item">
+          <span class="about-num">01</span>
+          <div class="about-text">
+            <strong data-i18n="step1Title">Listen before I speak</strong>
+            <span data-i18n="step1Desc">Before I suggest anything, I need to understand your full picture. No assumptions, no preloaded answers.</span>
+          </div>
+        </div>
+        <div class="about-item">
+          <span class="about-num">02</span>
+          <div class="about-text">
+            <strong data-i18n="step2Title">Build the right plan</strong>
+            <span data-i18n="step2Desc">A focused plan - not a 40-page deck. Specific actions you can actually execute, with clear owners and timelines.</span>
+          </div>
+        </div>
+        <div class="about-item">
+          <span class="about-num">03</span>
+          <div class="about-text">
+            <strong data-i18n="step3Title">Stay in it with you</strong>
+            <span data-i18n="step3Desc">You won't be left alone to implement. I stay embedded in the work until it moves - not until my report is delivered.</span>
+          </div>
+        </div>
+        <div class="about-item">
+          <span class="about-num">04</span>
+          <div class="about-text">
+            <strong data-i18n="step4Title">Track what's real</strong>
+            <span data-i18n="step4Desc">Progress is measured against the outcome you defined - not activity metrics or update calls.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- PRICING -->
+  <section id="session" class="section">
+    <p class="section-label" data-i18n="investLabel">Investment</p>
+    <h2 class="section-title" data-i18n-html="investTitle">Start with a conversation.<br>Scale from there.</h2>
+    <p class="section-body" data-i18n="investBody">Every engagement begins with an exploratory session. Packages are scoped to your exact situation - pricing reflects the depth of commitment and the outcomes we agree to deliver together.</p>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <p class="pricing-tier" data-i18n="pack1Tier">Foundation</p>
+        <h3 class="pricing-name" data-i18n="pack1Name">Focus</h3>
+        <p class="pricing-desc" data-i18n="pack1Desc">Short-term engagement targeting one critical pillar. For founders who know what's broken and need someone to move fast on a specific problem.</p>
+        <div class="price-blurred-wrap">
+          <div class="price-blurred" data-i18n-html="pack1Price"><span class="price-from">Starting at</span>470€<span class="price-unit"> / month</span></div>
+          <p class="price-note" data-i18n="priceNote">+ VAT</p>
+        </div>
+      </div>
+      <div class="pricing-card featured">
+        <p class="pricing-tier" data-i18n="pack2Tier">Growth</p>
+        <h3 class="pricing-name" data-i18n="pack2Name">Build</h3>
+        <p class="pricing-desc" data-i18n="pack2Desc">A sustained partnership across multiple pillars. For founders building real infrastructure - team, revenue model, and operational rhythm at the same time.</p>
+        <div class="price-blurred-wrap">
+          <div class="price-blurred" data-i18n-html="pack2Price"><span class="price-from">Starting at</span>990€<span class="price-unit"> / month</span></div>
+          <p class="price-note" data-i18n="priceNote">+ VAT</p>
+        </div>
+      </div>
+      <div class="pricing-card">
+        <p class="pricing-tier" data-i18n="pack3Tier">Full Access</p>
+        <h3 class="pricing-name" data-i18n="pack3Name">Scale</h3>
+        <p class="pricing-desc" data-i18n="pack3Desc">Deep fractional consulting - embedded presence, strategic ownership, and accountability across every dimension of the business.</p>
+        <div class="price-blurred-wrap">
+          <div class="price-blurred" data-i18n="pack3Price">By quote</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXPLORATORY WIN BOX -->
+    <div class="exploratory-box">
+      <div class="exp-left">
+        <p class="exp-label" data-i18n="expLabel">Where It Starts</p>
+        <h3 class="exp-title" data-i18n="expTitle">The Exploratory Session</h3>
+        <p class="exp-desc" data-i18n-html="expDesc">In 1 to 2 focused hours, we go straight to the core of what's holding you back. You'll leave with a clear diagnosis, one concrete priority to act on this week, and the confidence that someone who understands these challenges has seen your situation clearly.<br><br><strong>Whether or not we work together beyond this — that's already a win.</strong></p>
+      </div>
+      <div class="exp-price-block">
+        <div class="exp-price">312€</div>
+        <p class="exp-vat" data-i18n="expVat">+ VAT</p>
+        <p class="exp-deduct" data-i18n="expDeduct">Applied to your first monthly fee</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT FORM -->
+  <section class="contact-section" id="contact">
+    <div class="contact-inner">
+      <div class="contact-left">
+        <p class="section-label" data-i18n="ctaBandLabel">Let's talk</p>
+        <h2 data-i18n-html="ctaBandTitle">You've carried this<br>long enough. <em>Let's talk.</em></h2>
+        <p data-i18n="ctaBandBody">One honest conversation is often all it takes to see what's really happening. Come with your challenge. Leave with clarity.</p>
+        <div class="contact-trust">
+          <span class="contact-trust-item" data-i18n="trust1">One session. Real clarity. 312€ + VAT</span>
+          <span class="contact-trust-item" data-i18n="trust2">Applied to your first monthly fee if we continue</span>
+          <span class="contact-trust-item" data-i18n="trust3">No commitment. No pressure.</span>
+        </div>
+      </div>
+      <div class="contact-right">
+        <form class="contact-form" id="contactForm" onsubmit="submitForm(event)">
+          <input  class="form-field" type="text"  id="f-name"
+            data-placeholder-en="Your name" data-placeholder-pt="O teu nome"
+            placeholder="Your name" required />
+          <input  class="form-field" type="email" id="f-email"
+            data-placeholder-en="Email address" data-placeholder-pt="Endereço de email"
+            placeholder="Email address" required />
+          <input  class="form-field" type="text"  id="f-project"
+            data-placeholder-en="Your business or project" data-placeholder-pt="O teu negócio ou projeto"
+            placeholder="Your business or project" />
+          <select class="form-field" id="f-pillar">
+            <option value="" disabled selected data-i18n="formPillarDefault">Where is the pressure?</option>
+            <option value="Money"     data-i18n="p1Name">Money</option>
+            <option value="Idea"      data-i18n="p2Name">Idea</option>
+            <option value="Operation" data-i18n="p3Name">Operation</option>
+            <option value="Revenue"   data-i18n="p4Name">Revenue</option>
+            <option value="All"       data-i18n="formPillarAll">More than one pillar</option>
+          </select>
+          <textarea class="form-field" id="f-message" rows="3"
+            data-placeholder-en="Where are you now, and where do you want to go?"
+            data-placeholder-pt="Onde estás agora, e onde queres chegar?"
+            placeholder="Where are you now, and where do you want to go?"></textarea>
+          <button type="submit" class="form-submit" data-i18n="formSubmit">Send - I'll read every word →</button>
+          <p class="form-note" data-i18n="formNote">I respond within 24 hours. No spam, ever.</p>
+          <p class="form-success" id="formSuccess" data-i18n="formSuccess">Message sent. I'll be in touch shortly.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-logo">Vantis</span>
+    <span class="footer-copy" data-i18n="footerCopy">© 2026 Vantis. Operational Consulting for Founders.</span>
+  </footer>
+
+  <script>
+    const T = {
+      en: {
+        navTagline:"Structure. Direction. Scale.", navCta:"Get in touch",
+        heroLabel:"Operational Consulting - Vantis",
+        heroH1:"You already know<br>something isn't <em>working.</em>",
+        heroHint:"Select where the weight is right now.",
+        p1Name:"Money",     p1Tagline:"Capital, pricing & financial clarity",
+        p1Pain1:"I don't know how long my runway lasts",
+        p1Pain2:"I know I'm undercharging but don't know how to fix it",
+        p1Pain3:"Revenue exists but margins are unclear",
+        p1Pain4:"I need funding but don't know where to start",
+        p2Name:"Idea",      p2Tagline:"Positioning, differentiation & market fit",
+        p2Pain1:"My offer isn't landing with the right people",
+        p2Pain2:"I can't articulate what makes me different",
+        p2Pain3:"I'm unsure if the market actually wants this",
+        p2Pain4:"My positioning feels scattered and inconsistent",
+        p3Name:"Operation", p3Tagline:"Systems, team & execution clarity",
+        p3Pain1:"I'm doing everything myself and burning out",
+        p3Pain2:"My processes break when volume increases",
+        p3Pain3:"I don't have the right team or tools in place",
+        p3Pain4:"Execution is inconsistent week to week",
+        p4Name:"Revenue",   p4Tagline:"Conversion, sales motion & recurring income",
+        p4Pain1:"I have leads but struggle to convert them",
+        p4Pain2:"My income is unpredictable month to month",
+        p4Pain3:"I don't have a repeatable sales process",
+        p4Pain4:"I deliver real value but can't charge what it's worth",
+        panelHint:"- tap to select", ctaBtn:"Book Exploratory Session - 312€ + VAT →", scrollHint:"Scroll",
+        empathyQuote:"\"Most founders don't have a strategy problem. They have a <em>clarity</em> problem — and they've been carrying it alone for too long.\"",
+        pillarsLabel:"The Four Pillars",
+        pillarsTitle:"Every wall a founder hits<br>comes from one of four places.",
+        pillarsBody:"Most founders are surprised by which one is actually blocking them. That's exactly what we find together in the first session.",
+        pillar1Name:"Money", pillar1Desc:"Capital structure, burn rate, funding pathways, financial model clarity. Whether you're pre-revenue or in growth mode, money problems are always solvable with the right architecture.",
+        pillar2Name:"Idea",  pillar2Desc:"Positioning, differentiation, market fit, and creative direction. A strong idea that isn't shaped for the market stays invisible. I sharpen it until it lands.",
+        pillar3Name:"Operation", pillar3Desc:"Systems, team, process, tools, and execution rhythm. Growth without operational clarity creates chaos. I build the structure that lets you scale without breaking.",
+        pillar4Name:"Revenue",   pillar4Desc:"Pricing, conversion, sales motion, and recurring income. Revenue is the measure of everything working together. I connect the dots between the value you deliver and the income it earns.",
+        urgentLabel:"Your Urgent Need",
+        urgentTitle:"You've been carrying this.<br>It's time to put it down.",
+        urgentSelectLabel:"What's pressing hardest right now?",
+        urgentBtn:"Let's talk about it →",
+        urgentP1:"You don't need a generalist. You need someone who sits down, looks at your specific situation, and tells you the truth - including the parts that are uncomfortable to hear.",
+        urgentP2:"Every engagement starts with one honest conversation. No templates, no vague frameworks. Just a direct look at where you are, what's blocking you, and what to do next.",
+        urgentP3:"The plan is built entirely around your reality - your stage, your product, your constraints. Nothing borrowed from another founder's playbook.",
+        approachLabel:"How I Work",
+        approachTitle:"Honest diagnosis.<br>Real work together.",
+        approachBody:"I don't show up with a slide deck and a framework. I show up ready to listen - then ready to do the work alongside you until it actually moves.",
+        step1Title:"Listen before I speak",    step1Desc:"Before I suggest anything, I need to understand your full picture. No assumptions, no preloaded answers.",
+        step2Title:"Build the right plan",     step2Desc:"A focused plan - not a 40-page deck. Specific actions you can actually execute, with clear owners and timelines.",
+        step3Title:"Stay in it with you",      step3Desc:"You won't be left alone to implement. I stay embedded in the work until it moves - not until my report is delivered.",
+        step4Title:"Track what's real",        step4Desc:"Progress is measured against the outcome you defined - not activity metrics or update calls.",
+        investLabel:"Investment", investTitle:"Start with a conversation.<br>Scale from there.",
+        investBody:"Every engagement begins with an exploratory session. Packages are scoped to your exact situation - pricing reflects the depth of commitment and the outcomes we agree to deliver together.",
+        pack1Tier:"Foundation", pack1Name:"Focus",
+        pack1Desc:"Short-term engagement targeting one critical pillar. For founders who know what's broken and need someone to move fast on a specific problem.",
+        pack2Tier:"Growth", pack2Name:"Build",
+        pack2Desc:"A sustained partnership across multiple pillars. For founders building real infrastructure - team, revenue model, and operational rhythm at the same time.",
+        pack3Tier:"Full Access", pack3Name:"Scale",
+        pack3Desc:"Deep fractional consulting - embedded presence, strategic ownership, and accountability across every dimension of the business.",
+        priceNote:"+ VAT",
+        pack1Price:'<span class="price-from">Starting at</span>470€<span class="price-unit"> / month</span>',
+        pack2Price:'<span class="price-from">Starting at</span>990€<span class="price-unit"> / month</span>',
+        pack3Price:"By quote",
+        expLabel:"Where It Starts", expTitle:"The Exploratory Session",
+        expDesc:"In 1 to 2 focused hours, we go straight to the core of what's holding you back. You'll leave with a clear diagnosis, one concrete priority to act on this week, and the confidence that someone who understands these challenges has seen your situation clearly.<br><br><strong>Whether or not we work together beyond this — that's already a win.</strong>",
+        expVat:"+ VAT", expDeduct:"Applied to your first monthly fee",
+        ctaBandLabel:"Let's talk",
+        ctaBandTitle:"You've carried this<br>long enough. <em>Let's talk.</em>",
+        ctaBandBody:"One honest conversation is often all it takes to see what's really happening. Come with your challenge. Leave with clarity.",
+        trust1:"One session. Real clarity. 312€ + VAT",
+        trust2:"Applied to your first monthly fee if we continue",
+        trust3:"No commitment. No pressure.",
+        formPillarDefault:"Where is the pressure?", formPillarAll:"More than one pillar",
+        formSubmit:"Send - I'll read every word →",
+        formNote:"I respond within 24 hours. No spam, ever.",
+        formSuccess:"Message sent. I'll be in touch shortly.",
+        footerCopy:"© 2026 Vantis. Operational Consulting for Founders.",
+        s_is:" is where the pressure is.", s_and:" and ", s_are:" are your main challenges.",
+        s_are3:" are your priorities.", s_all:"You've identified pressure across <strong>all four pillars</strong>.",
+        s_pts1:" (1 specific point resonated)", s_ptsN:" specific points resonated)", s_ptsPre:" (",
+      },
+      pt: {
+        navTagline:"Estrutura. Direção. Escala.", navCta:"Entrar em contacto",
+        heroLabel:"Consultoria Operacional - Vantis",
+        heroH1:"Já sabes que<br>algo não está a <em>funcionar.</em>",
+        heroHint:"Seleciona onde está o peso agora.",
+        p1Name:"Dinheiro",  p1Tagline:"Capital, preços e clareza financeira",
+        p1Pain1:"Não sei quanto tempo tenho de runway",
+        p1Pain2:"Sei que estou a cobrar pouco mas não sei como mudar",
+        p1Pain3:"Tenho receita mas as margens não são claras",
+        p1Pain4:"Preciso de financiamento mas não sei por onde começar",
+        p2Name:"Ideia",     p2Tagline:"Posicionamento, diferenciação e encaixe no mercado",
+        p2Pain1:"A minha oferta não está a chegar às pessoas certas",
+        p2Pain2:"Não consigo explicar o que me torna diferente",
+        p2Pain3:"Não tenho a certeza se o mercado quer isto",
+        p2Pain4:"O meu posicionamento parece disperso e inconsistente",
+        p3Name:"Operação",  p3Tagline:"Sistemas, equipa e clareza de execução",
+        p3Pain1:"Estou a fazer tudo sozinho e a esgotar-me",
+        p3Pain2:"Os meus processos quebram quando o volume aumenta",
+        p3Pain3:"Não tenho a equipa ou as ferramentas certas",
+        p3Pain4:"A execução é inconsistente semana após semana",
+        p4Name:"Receita",   p4Tagline:"Conversão, processo de venda e receita recorrente",
+        p4Pain1:"Tenho leads mas tenho dificuldade em convertê-los",
+        p4Pain2:"A minha receita é imprevisível de mês para mês",
+        p4Pain3:"Não tenho um processo de vendas repetível",
+        p4Pain4:"Entrego valor real mas não consigo cobrar o que vale",
+        panelHint:"- toca para selecionar", ctaBtn:"Marcar Sessão Exploratória - 312€ + IVA →", scrollHint:"Rolar",
+        empathyQuote:"\"A maioria dos fundadores não tem um problema de estratégia. Tem um problema de <em>clareza</em> — e tem carregado isso sozinho durante demasiado tempo.\"",
+        pillarsLabel:"Os Quatro Pilares",
+        pillarsTitle:"Cada obstáculo que um fundador enfrenta<br>vem de um de quatro lugares.",
+        pillarsBody:"A maioria dos fundadores surpreende-se com qual está realmente a bloqueá-los. É exatamente isso que descobrimos juntos na primeira sessão.",
+        pillar1Name:"Dinheiro", pillar1Desc:"Estrutura de capital, burn rate, caminhos de financiamento, clareza do modelo financeiro. Seja pré-receita ou em modo de crescimento, os problemas financeiros são sempre resolúveis com a arquitetura certa.",
+        pillar2Name:"Ideia",    pillar2Desc:"Posicionamento, diferenciação, encaixe no mercado e direção criativa. Uma ideia forte que não está moldada para o mercado permanece invisível. Afino-a até que resulte.",
+        pillar3Name:"Operação", pillar3Desc:"Sistemas, equipa, processos, ferramentas e ritmo de execução. Crescimento sem clareza operacional cria caos. Construo a estrutura que te permite escalar sem quebrar.",
+        pillar4Name:"Receita",  pillar4Desc:"Preços, conversão, processo de vendas e receita recorrente. A receita é a medida de tudo a funcionar em conjunto. Ligo os pontos entre o valor que entregas e o rendimento que geras.",
+        urgentLabel:"A Tua Necessidade Urgente",
+        urgentTitle:"Já carregas isto há demasiado tempo.<br>É hora de largar.",
+        urgentSelectLabel:"O que está a pesar mais agora?",
+        urgentBtn:"Vamos falar sobre isso →",
+        urgentP1:"Não precisas de um generalista. Precisas de alguém que se sente, olha para a tua situação específica e te diz a verdade - incluindo as partes desconfortáveis.",
+        urgentP2:"Cada compromisso começa com uma conversa honesta. Sem templates, sem frameworks vagos. Apenas um olhar direto sobre onde estás, o que te bloqueia e o que fazer a seguir.",
+        urgentP3:"O plano é construído inteiramente em torno da tua realidade - a tua fase, o teu produto, as tuas limitações. Nada retirado do manual de outro fundador.",
+        approachLabel:"Como Trabalho",
+        approachTitle:"Diagnóstico honesto.<br>Trabalho real juntos.",
+        approachBody:"Não apareço com um deck de slides e um framework. Apareço pronto para ouvir - e depois pronto para fazer o trabalho contigo até que realmente avance.",
+        step1Title:"Ouvir antes de falar",        step1Desc:"Antes de sugerir qualquer coisa, preciso de entender o teu quadro completo. Sem suposições, sem respostas pré-carregadas.",
+        step2Title:"Construir o plano certo",     step2Desc:"Um plano focado - não um deck de 40 páginas. Ações específicas que podes realmente executar, com responsáveis e prazos claros.",
+        step3Title:"Ficar contigo até ao fim",    step3Desc:"Não ficas sozinho a implementar. Fico integrado no trabalho até que avance - não até o meu relatório estar entregue.",
+        step4Title:"Medir o que é real",          step4Desc:"O progresso é medido em relação ao resultado que definiste - não métricas de atividade.",
+        investLabel:"Investimento", investTitle:"Começa com uma conversa.<br>Escala a partir daí.",
+        investBody:"Cada compromisso começa com uma sessão exploratória. Os pacotes são dimensionados para a tua situação específica - o preço reflete a profundidade do compromisso e os resultados que acordamos entregar juntos.",
+        pack1Tier:"Fundação", pack1Name:"Foco",
+        pack1Desc:"Compromisso de curto prazo focado num pilar crítico. Para fundadores que sabem o que está quebrado e precisam de alguém a mover rápido num problema específico.",
+        pack2Tier:"Crescimento", pack2Name:"Construir",
+        pack2Desc:"Uma parceria sustentada em múltiplos pilares. Para fundadores a construir infraestrutura real - equipa, modelo de receita e ritmo operacional ao mesmo tempo.",
+        pack3Tier:"Acesso Total", pack3Name:"Escalar",
+        pack3Desc:"Consultoria fracional aprofundada - presença integrada, responsabilidade estratégica e responsabilização em todas as dimensões do negócio.",
+        priceNote:"+ IVA",
+        pack1Price:'<span class="price-from">A partir de</span>470€<span class="price-unit"> / mês</span>',
+        pack2Price:'<span class="price-from">A partir de</span>990€<span class="price-unit"> / mês</span>',
+        pack3Price:"Mediante orçamento",
+        expLabel:"Por Onde Começa", expTitle:"A Sessão Exploratória",
+        expDesc:"Em 1 a 2 horas focadas, vamos direto ao cerne do que te está a travar. Sais com um diagnóstico claro, uma prioridade concreta para agir esta semana, e a confiança de que alguém que entende estes desafios viu a tua situação claramente.<br><br><strong>Mesmo que não trabalhemos juntos para além disto — isso já é uma vitória.</strong>",
+        expVat:"+ IVA", expDeduct:"Aplicado à tua primeira mensalidade",
+        ctaBandLabel:"Vamos conversar",
+        ctaBandTitle:"Já carregas isto<br>há demasiado tempo. <em>Vamos conversar.</em>",
+        ctaBandBody:"Uma conversa honesta é muitas vezes suficiente para ver o que está realmente a acontecer. Vem com o teu desafio. Sai com clareza.",
+        trust1:"Uma sessão. Clareza real. 312€ + IVA",
+        trust2:"Aplicado à tua primeira mensalidade se continuarmos",
+        trust3:"Sem compromisso. Sem pressão.",
+        formPillarDefault:"Onde está a pressão?", formPillarAll:"Em mais de um pilar",
+        formSubmit:"Enviar - Leio tudo com atenção →",
+        formNote:"Respondo em 24 horas. Sem spam, nunca.",
+        formSuccess:"Mensagem enviada. Entrarei em contacto em breve.",
+        footerCopy:"© 2026 Vantis. Consultoria Operacional para Fundadores.",
+        s_is:" é onde está a pressão.", s_and:" e ", s_are:" são os teus principais desafios.",
+        s_are3:" são as tuas prioridades.", s_all:"Identificaste pressão em <strong>todos os quatro pilares</strong>.",
+        s_pts1:" (1 ponto ressoou)", s_ptsN:" pontos ressoaram)", s_ptsPre:" (",
+      }
+    };
+
+    let lang = 'en';
+
+    function setLang(l) {
+      lang = l;
+      document.documentElement.lang = l;
+      document.getElementById('btnEN').classList.toggle('active', l === 'en');
+      document.getElementById('btnPT').classList.toggle('active', l === 'pt');
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const v = T[l][el.getAttribute('data-i18n')];
+        if (v !== undefined) el.textContent = v;
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const v = T[l][el.getAttribute('data-i18n-html')];
+        if (v !== undefined) el.innerHTML = v;
+      });
+      document.querySelectorAll('[data-placeholder-' + l + ']').forEach(el => {
+        el.placeholder = el.getAttribute('data-placeholder-' + l);
+      });
+      updateCta();
+    }
+
+    const diagCta    = document.getElementById('diagCta');
+    const ctaSummary = document.getElementById('ctaSummary');
+
+    function selectPanel(panel) { panel.classList.toggle('active'); updateCta(); }
+    function togglePain(e, li)  { e.stopPropagation(); li.classList.toggle('checked'); updateCta(); }
+
+    function updateCta() {
+      const active = [...document.querySelectorAll('.diag-panel.active')];
+      if (!active.length) { diagCta.classList.remove('visible'); return; }
+      diagCta.classList.add('visible');
+      const t = T[lang];
+      const attr = lang === 'pt' ? 'data-pillar-pt' : 'data-pillar-en';
+      const names = active.map(p => '<strong>' + p.getAttribute(attr) + '</strong>');
+      const checked = document.querySelectorAll('.panel-pains li.checked').length;
+      let s = '';
+      if      (active.length === 1) s = names[0] + t.s_is;
+      else if (active.length === 2) s = names[0] + t.s_and + names[1] + t.s_are;
+      else if (active.length === 3) s = names.slice(0,2).join(', ') + t.s_and + names[2] + t.s_are3;
+      else                          s = t.s_all;
+      if (checked === 1) s += t.s_pts1;
+      else if (checked > 1) s += t.s_ptsPre + checked + ' ' + t.s_ptsN;
+      ctaSummary.innerHTML = s;
+    }
+
+    function submitForm(e) {
+      e.preventDefault();
+      const name    = document.getElementById('f-name').value;
+      const email   = document.getElementById('f-email').value;
+      const project = document.getElementById('f-project').value;
+      const pillar  = document.getElementById('f-pillar').value;
+      const message = document.getElementById('f-message').value;
+      const subject = encodeURIComponent('Vantis - Exploratory Session Request');
+      const body    = encodeURIComponent(
+        'Name: ' + name + '\nEmail: ' + email + '\n' +
+        (project ? 'Business/Project: ' + project + '\n' : '') +
+        (pillar  ? 'Primary challenge: ' + pillar  + '\n' : '') +
+        '\n' + message
+      );
+      window.location.href = 'mailto:dico.afonseca@gmail.com?subject=' + subject + '&body=' + body;
+      document.getElementById('contactForm').reset();
+      const s = document.getElementById('formSuccess');
+      s.style.display = 'block';
+      setTimeout(() => { s.style.display = 'none'; }, 5000);
+    }
+
+    const ro = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.pillar, .pricing-card, .about-item, .exploratory-box, .empathy-band').forEach(el => {
+      el.style.opacity = '0'; el.style.transform = 'translateY(18px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      ro.observe(el);
+    });
+
+    window.addEventListener('scroll', () => {
+      const h = document.getElementById('scrollHint');
+      if (h) h.style.opacity = window.scrollY > 40 ? '0' : '';
+    }, { passive: true });
+
+    function toggleTag(el) { el.classList.toggle('active'); }
+
+    document.querySelectorAll('[data-placeholder-en]').forEach(el => {
+      el.placeholder = el.getAttribute('data-placeholder-en');
+    });
+  </script>
+</body>
+</html>
