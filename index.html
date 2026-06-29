@@ -486,11 +486,14 @@
     .me-stat:hover { background: var(--grove-light); }
     .me-stat-num { font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 500; color: var(--grove); line-height: 1; }
     .me-stat-label { font-size: 0.88rem; color: var(--muted); line-height: 1.55; }
-    .testimonial { margin-top: 56px; background: var(--grove-light); border: 1px solid rgba(45,122,79,0.18); padding: 40px 46px; }
-    .testimonial-quote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.28rem; line-height: 1.62; color: var(--soil); max-width: 860px; }
-    .testimonial-by { margin-top: 26px; display: flex; flex-direction: column; gap: 4px; }
-    .testimonial-name { font-weight: 600; font-size: 1rem; color: var(--soil); }
-    .testimonial-role { font-size: 0.86rem; font-weight: 500; color: var(--grove); }
+    .refs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin-top: 56px; }
+    .ref-card { background: var(--cream); padding: 38px 34px; display: flex; flex-direction: column; }
+    .ref-quote { font-size: 1.04rem; line-height: 1.7; color: var(--muted); flex: 1; }
+    .ref-by { display: flex; align-items: center; gap: 14px; margin-top: 28px; }
+    .ref-avatar { width: 46px; height: 46px; border-radius: 50%; background: var(--soil); color: var(--cream); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 1.05rem; flex-shrink: 0; }
+    .ref-byline { display: flex; flex-direction: column; gap: 2px; }
+    .ref-name { font-weight: 600; font-size: 1rem; color: var(--soil); }
+    .ref-role { font-size: 0.86rem; font-weight: 500; color: var(--grove); }
 
     /* ── POLISH ── */
     .section-title, .contact-left h2, .hero-diag-top h1, .empathy-band blockquote { text-wrap: balance; }
@@ -539,8 +542,8 @@
       .me-aside { text-align: center; }
       .me-portrait { margin: 0 auto; }
       .me-stats { grid-template-columns: 1fr; }
-      .testimonial { padding: 28px 24px; }
-      .testimonial-quote { font-size: 1.12rem; }
+      .refs-grid { grid-template-columns: 1fr; }
+      .ref-card { padding: 30px 26px; }
       .pricing-grid { grid-template-columns: 1fr; }
       .exploratory-box { grid-template-columns: 1fr; gap: 28px; padding: 36px 28px; }
       .exp-price-block { text-align: left; }
@@ -810,14 +813,6 @@
         </div>
       </div>
     </div>
-
-    <figure class="testimonial">
-      <blockquote class="testimonial-quote" data-i18n-html="tmQuote">"I started working with Frederico during a hard, challenging growth stage of Offcoustic. We already had our own factory, but we were doubling down on units sold and needed to improve our production capacity, logistics organisation, and delivery across Portugal, Spain, and other countries case by case.<br><br>Frederico is fully autonomous - our production and logistics changed a lot in a 6-9 month period. Customer-facing work is one of his main strengths: he manages complex communication through hard logistics and operations processes."</blockquote>
-      <figcaption class="testimonial-by">
-        <span class="testimonial-name">Rodrigo Pessoa Jorge</span>
-        <span class="testimonial-role" data-i18n="tmRole">Founder, Offcoustic - managed Frederico directly</span>
-      </figcaption>
-    </figure>
   </section>
 
   <hr class="divider" />
@@ -868,6 +863,27 @@
         <p class="exp-vat" data-i18n="expVat">+ VAT</p>
         <p class="exp-deduct" data-i18n="expDeduct">Applied to your first monthly fee</p>
       </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- REFERENCES -->
+  <section class="section" id="references">
+    <p class="section-label" data-i18n="refsLabel">References</p>
+    <h2 class="section-title" data-i18n="refsTitle">In their own words.</h2>
+    <p class="section-body" data-i18n="refsBody">A few words from the founders and teams I've worked alongside - the people who've seen the work up close.</p>
+    <div class="refs-grid">
+      <figure class="ref-card">
+        <blockquote class="ref-quote" data-i18n-html="tmQuote">"I started working with Frederico during a hard, challenging growth stage of Offcoustic. We already had our own factory, but we were doubling down on units sold and needed to improve our production capacity, logistics organisation, and delivery across Portugal, Spain, and other countries case by case.<br><br>Frederico is fully autonomous - our production and logistics changed a lot in a 6-9 month period. Customer-facing work is one of his main strengths: he manages complex communication through hard logistics and operations processes."</blockquote>
+        <figcaption class="ref-by">
+          <span class="ref-avatar" aria-hidden="true">RJ</span>
+          <span class="ref-byline">
+            <span class="ref-name">Rodrigo Pessoa Jorge</span>
+            <span class="ref-role" data-i18n="tmRole">Founder, Offcoustic - managed Frederico directly</span>
+          </span>
+        </figcaption>
+      </figure>
     </div>
   </section>
 
@@ -987,6 +1003,8 @@
         meStat2Num:"Founder", meStat2:"built & scaled a company to a team of 10 - then closed it honestly on unit economics",
         tmQuote:'"I started working with Frederico during a hard, challenging growth stage of Offcoustic. We already had our own factory, but we were doubling down on units sold and needed to improve our production capacity, logistics organisation, and delivery across Portugal, Spain, and other countries case by case.<br><br>Frederico is fully autonomous - our production and logistics changed a lot in a 6-9 month period. Customer-facing work is one of his main strengths: he manages complex communication through hard logistics and operations processes."',
         tmRole:"Founder, Offcoustic - managed Frederico directly",
+        refsLabel:"References", refsTitle:"In their own words.",
+        refsBody:"A few words from the founders and teams I've worked alongside - the people who've seen the work up close.",
         investLabel:"Investment", investTitle:"Start with a conversation.<br>Scale from there.",
         investBody:"Every engagement begins with an exploratory session. Packages are scoped to your exact situation - pricing reflects the depth of commitment and the outcomes we agree to deliver together.",
         pack1Tier:"Foundation", pack1Name:"Focus",
@@ -1073,6 +1091,8 @@
         meStat2Num:"Fundador", meStat2:"construiu e escalou uma empresa até 10 pessoas - e encerrou-a com honestidade pela economia unitária",
         tmQuote:'"Comecei a trabalhar com o Frederico numa fase de crescimento difícil e exigente da Offcoustic. Já tínhamos a nossa própria fábrica, mas estávamos a aumentar fortemente as unidades vendidas e precisávamos de melhorar a capacidade de produção, a organização logística e as entregas em Portugal, Espanha e outros países, caso a caso.<br><br>O Frederico é totalmente autónomo - a nossa produção e logística mudaram muito num período de 6 a 9 meses. A relação com o cliente é uma das suas grandes forças: gere comunicação complexa em processos difíceis de logística e operações."',
         tmRole:"Fundador, Offcoustic - geriu o Frederico diretamente",
+        refsLabel:"Referências", refsTitle:"Nas suas próprias palavras.",
+        refsBody:"Algumas palavras dos fundadores e equipas com quem trabalhei - quem viu o trabalho de perto.",
         investLabel:"Investimento", investTitle:"Começa com uma conversa.<br>Escala a partir daí.",
         investBody:"Cada compromisso começa com uma sessão exploratória. Os pacotes são dimensionados para a tua situação específica - o preço reflete a profundidade do compromisso e os resultados que acordamos entregar juntos.",
         pack1Tier:"Fundação", pack1Name:"Foco",
