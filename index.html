@@ -467,6 +467,26 @@
     .footer-mark { height: 21px; width: auto; display: block; }
     .footer-copy { font-size: 0.84rem; color: var(--muted); }
 
+    /* ── WHO YOU'LL WORK WITH ── */
+    .me-row { display: grid; grid-template-columns: 280px 1fr; gap: 64px; align-items: start; margin-top: 8px; }
+    .me-portrait {
+      width: 156px; height: 156px; border-radius: 50%;
+      background: var(--soil); color: var(--cream); overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif; font-size: 3.1rem; font-weight: 500;
+      letter-spacing: 0.02em; box-shadow: 0 16px 36px -20px rgba(26,18,8,0.5);
+    }
+    .me-portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .me-name { font-family: 'Playfair Display', serif; font-size: 1.55rem; font-weight: 500; color: var(--soil); margin-top: 24px; line-height: 1.2; }
+    .me-role { font-size: 0.92rem; font-weight: 600; color: var(--grove); letter-spacing: 0.01em; margin-top: 7px; }
+    .me-bio { font-size: 1.08rem; color: var(--muted); line-height: 1.85; margin-bottom: 20px; max-width: 580px; }
+    .me-bio:last-of-type { margin-bottom: 0; }
+    .me-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin-top: 36px; }
+    .me-stat { background: var(--cream); padding: 26px 24px; display: flex; flex-direction: column; gap: 9px; transition: background 0.22s; }
+    .me-stat:hover { background: var(--grove-light); }
+    .me-stat-num { font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 500; color: var(--grove); line-height: 1; }
+    .me-stat-label { font-size: 0.88rem; color: var(--muted); line-height: 1.55; }
+
     /* ── POLISH ── */
     .section-title, .contact-left h2, .hero-diag-top h1, .empathy-band blockquote { text-wrap: balance; }
     .section-body, .pillar-desc, .pricing-desc, .exp-desc, .urgent-right p, .about-text span { text-wrap: pretty; }
@@ -510,6 +530,10 @@
       .section, .urgent-inner { padding: 80px 24px; }
       .pillars-grid { grid-template-columns: 1fr; }
       .urgent-row, .about-row, .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+      .me-row { grid-template-columns: 1fr; gap: 36px; }
+      .me-aside { text-align: center; }
+      .me-portrait { margin: 0 auto; }
+      .me-stats { grid-template-columns: 1fr; }
       .pricing-grid { grid-template-columns: 1fr; }
       .exploratory-box { grid-template-columns: 1fr; gap: 28px; padding: 36px 28px; }
       .exp-price-block { text-align: left; }
@@ -755,6 +779,38 @@
 
   <hr class="divider" />
 
+  <!-- WHO YOU'LL WORK WITH -->
+  <section class="section" id="about">
+    <p class="section-label" data-i18n="meLabel">Who You'll Work With</p>
+    <div class="me-row">
+      <div class="me-aside">
+        <div class="me-portrait" role="img" aria-label="Frederico Adão da Fonseca">FF</div>
+        <h3 class="me-name">Frederico Adão da Fonseca</h3>
+        <p class="me-role" data-i18n="meRole">Founder & operator behind Vantis</p>
+      </div>
+      <div class="me-main">
+        <p class="me-bio" data-i18n="meBio1">I'm Frederico - the operator behind Vantis. For the better part of a decade I've built and run operations across FMCG, fintech and manufacturing, in Portugal and across Europe. I've also sat where you sit: I co-founded a company, scaled it to a team of ten, and later made the disciplined call to wind it down when the unit economics didn't hold. The building and the honest reckoning both shape how I work.</p>
+        <p class="me-bio" data-i18n="meBio2">Most of what I do is build from zero - operational systems, reporting, logistics, market entries, new product lines. I've launched a category to €150k in its first six months, stood up operations for a manufacturer expanding into the Nordics and the UK, and led the cross-functional teams that delivered it. I work hands-on and close to the work, in three languages, and I care more about being useful than impressive.</p>
+        <div class="me-stats">
+          <div class="me-stat">
+            <span class="me-stat-num" data-i18n="meStat1Num">8+ yrs</span>
+            <span class="me-stat-label" data-i18n="meStat1">operating across FMCG, fintech &amp; manufacturing</span>
+          </div>
+          <div class="me-stat">
+            <span class="me-stat-num" data-i18n="meStat2Num">Founder</span>
+            <span class="me-stat-label" data-i18n="meStat2">built &amp; scaled a company to a team of 10 - then closed it honestly on unit economics</span>
+          </div>
+          <div class="me-stat">
+            <span class="me-stat-num" data-i18n="meStat3Num">€150k</span>
+            <span class="me-stat-label" data-i18n="meStat3">revenue from a new product category in its first six months</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
   <!-- PRICING -->
   <section id="session" class="section">
     <p class="section-label" data-i18n="investLabel">Investment</p>
@@ -912,6 +968,13 @@
         step2Title:"Build the right plan",     step2Desc:"A focused plan - not a 40-page deck. Specific actions you can actually execute, with clear owners and timelines.",
         step3Title:"Stay in it with you",      step3Desc:"You won't be left alone to implement. I stay embedded in the work until it moves - not until my report is delivered.",
         step4Title:"Track what's real",        step4Desc:"Progress is measured against the outcome you defined - not activity metrics or update calls.",
+        meLabel:"Who You'll Work With",
+        meRole:"Founder & operator behind Vantis",
+        meBio1:"I'm Frederico - the operator behind Vantis. For the better part of a decade I've built and run operations across FMCG, fintech and manufacturing, in Portugal and across Europe. I've also sat where you sit: I co-founded a company, scaled it to a team of ten, and later made the disciplined call to wind it down when the unit economics didn't hold. The building and the honest reckoning both shape how I work.",
+        meBio2:"Most of what I do is build from zero - operational systems, reporting, logistics, market entries, new product lines. I've launched a category to €150k in its first six months, stood up operations for a manufacturer expanding into the Nordics and the UK, and led the cross-functional teams that delivered it. I work hands-on and close to the work, in three languages, and I care more about being useful than impressive.",
+        meStat1Num:"8+ yrs", meStat1:"operating across FMCG, fintech & manufacturing",
+        meStat2Num:"Founder", meStat2:"built & scaled a company to a team of 10 - then closed it honestly on unit economics",
+        meStat3Num:"€150k", meStat3:"revenue from a new product category in its first six months",
         investLabel:"Investment", investTitle:"Start with a conversation.<br>Scale from there.",
         investBody:"Every engagement begins with an exploratory session. Packages are scoped to your exact situation - pricing reflects the depth of commitment and the outcomes we agree to deliver together.",
         pack1Tier:"Foundation", pack1Name:"Focus",
@@ -990,6 +1053,13 @@
         step2Title:"Construir o plano certo",     step2Desc:"Um plano focado - não um deck de 40 páginas. Ações específicas que podes realmente executar, com responsáveis e prazos claros.",
         step3Title:"Ficar contigo até ao fim",    step3Desc:"Não ficas sozinho a implementar. Fico integrado no trabalho até que avance - não até o meu relatório estar entregue.",
         step4Title:"Medir o que é real",          step4Desc:"O progresso é medido em relação ao resultado que definiste - não métricas de atividade.",
+        meLabel:"Com Quem Vais Trabalhar",
+        meRole:"Fundador e operador por trás da Vantis",
+        meBio1:"Sou o Frederico - o operador por trás da Vantis. Durante quase uma década construí e geri operações em FMCG, fintech e indústria, em Portugal e por toda a Europa. Também já estive onde tu estás: co-fundei uma empresa, fi-la crescer até uma equipa de dez pessoas, e mais tarde tomei a decisão disciplinada de a encerrar quando a economia unitária não se sustentava. Tanto a construção como o balanço honesto moldam a forma como trabalho.",
+        meBio2:"Grande parte do que faço é construir de raiz - sistemas operacionais, reporting, logística, entradas em novos mercados, novas linhas de produto. Lancei uma categoria que atingiu 150 000 € nos primeiros seis meses, montei as operações de um fabricante em expansão para os países nórdicos e o Reino Unido, e liderei as equipas multifuncionais que o concretizaram. Trabalho de forma prática e próxima do terreno, em três línguas, e prefiro ser útil a ser impressionante.",
+        meStat1Num:"8+ anos", meStat1:"a construir e gerir operações em FMCG, fintech e indústria",
+        meStat2Num:"Fundador", meStat2:"construiu e escalou uma empresa até 10 pessoas - e encerrou-a com honestidade pela economia unitária",
+        meStat3Num:"150 000 €", meStat3:"de receita de uma nova categoria de produto nos primeiros seis meses",
         investLabel:"Investimento", investTitle:"Começa com uma conversa.<br>Escala a partir daí.",
         investBody:"Cada compromisso começa com uma sessão exploratória. Os pacotes são dimensionados para a tua situação específica - o preço reflete a profundidade do compromisso e os resultados que acordamos entregar juntos.",
         pack1Tier:"Fundação", pack1Name:"Foco",
