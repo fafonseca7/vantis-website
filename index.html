@@ -481,11 +481,16 @@
     .me-role { font-size: 0.92rem; font-weight: 600; color: var(--grove); letter-spacing: 0.01em; margin-top: 7px; }
     .me-bio { font-size: 1.08rem; color: var(--muted); line-height: 1.85; margin-bottom: 20px; max-width: 580px; }
     .me-bio:last-of-type { margin-bottom: 0; }
-    .me-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin-top: 36px; }
+    .me-stats { display: grid; grid-template-columns: repeat(2,1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin-top: 36px; }
     .me-stat { background: var(--cream); padding: 26px 24px; display: flex; flex-direction: column; gap: 9px; transition: background 0.22s; }
     .me-stat:hover { background: var(--grove-light); }
     .me-stat-num { font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 500; color: var(--grove); line-height: 1; }
     .me-stat-label { font-size: 0.88rem; color: var(--muted); line-height: 1.55; }
+    .testimonial { margin-top: 56px; background: var(--grove-light); border: 1px solid rgba(45,122,79,0.18); padding: 40px 46px; }
+    .testimonial-quote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.28rem; line-height: 1.62; color: var(--soil); max-width: 860px; }
+    .testimonial-by { margin-top: 26px; display: flex; flex-direction: column; gap: 4px; }
+    .testimonial-name { font-weight: 600; font-size: 1rem; color: var(--soil); }
+    .testimonial-role { font-size: 0.86rem; font-weight: 500; color: var(--grove); }
 
     /* ── POLISH ── */
     .section-title, .contact-left h2, .hero-diag-top h1, .empathy-band blockquote { text-wrap: balance; }
@@ -534,6 +539,8 @@
       .me-aside { text-align: center; }
       .me-portrait { margin: 0 auto; }
       .me-stats { grid-template-columns: 1fr; }
+      .testimonial { padding: 28px 24px; }
+      .testimonial-quote { font-size: 1.12rem; }
       .pricing-grid { grid-template-columns: 1fr; }
       .exploratory-box { grid-template-columns: 1fr; gap: 28px; padding: 36px 28px; }
       .exp-price-block { text-align: left; }
@@ -784,13 +791,13 @@
     <p class="section-label" data-i18n="meLabel">Who You'll Work With</p>
     <div class="me-row">
       <div class="me-aside">
-        <div class="me-portrait" role="img" aria-label="Frederico Adão da Fonseca">FF</div>
+        <div class="me-portrait"><img src="frederico.jpg" alt="Frederico Adão da Fonseca" width="360" height="360" /></div>
         <h3 class="me-name">Frederico Adão da Fonseca</h3>
         <p class="me-role" data-i18n="meRole">Founder & operator behind Vantis</p>
       </div>
       <div class="me-main">
         <p class="me-bio" data-i18n="meBio1">I'm Frederico - the operator behind Vantis. For the better part of a decade I've built and run operations across FMCG, fintech and manufacturing, in Portugal and across Europe. I've also sat where you sit: I co-founded a company, scaled it to a team of ten, and later made the disciplined call to wind it down when the unit economics didn't hold. The building and the honest reckoning both shape how I work.</p>
-        <p class="me-bio" data-i18n="meBio2">Most of what I do is build from zero - operational systems, reporting, logistics, market entries, new product lines. I've launched a category to €150k in its first six months, stood up operations for a manufacturer expanding into the Nordics and the UK, and led the cross-functional teams that delivered it. I work hands-on and close to the work, in three languages, and I care more about being useful than impressive.</p>
+        <p class="me-bio" data-i18n="meBio2">Most of what I do is build from zero - operational systems, reporting, logistics, market entries, new product lines. I've launched new product categories from zero, stood up operations for a manufacturer expanding into the Nordics and the UK, and led the cross-functional teams that delivered it. I work hands-on and close to the work, in three languages, and I care more about being useful than impressive.</p>
         <div class="me-stats">
           <div class="me-stat">
             <span class="me-stat-num" data-i18n="meStat1Num">8+ yrs</span>
@@ -800,13 +807,17 @@
             <span class="me-stat-num" data-i18n="meStat2Num">Founder</span>
             <span class="me-stat-label" data-i18n="meStat2">built &amp; scaled a company to a team of 10 - then closed it honestly on unit economics</span>
           </div>
-          <div class="me-stat">
-            <span class="me-stat-num" data-i18n="meStat3Num">€150k</span>
-            <span class="me-stat-label" data-i18n="meStat3">revenue from a new product category in its first six months</span>
-          </div>
         </div>
       </div>
     </div>
+
+    <figure class="testimonial">
+      <blockquote class="testimonial-quote" data-i18n-html="tmQuote">"I started working with Frederico during a hard, challenging growth stage of Offcoustic. We already had our own factory, but we were doubling down on units sold and needed to improve our production capacity, logistics organisation, and delivery across Portugal, Spain, and other countries case by case.<br><br>Frederico is fully autonomous - our production and logistics changed a lot in a 6-9 month period. Customer-facing work is one of his main strengths: he manages complex communication through hard logistics and operations processes."</blockquote>
+      <figcaption class="testimonial-by">
+        <span class="testimonial-name">Rodrigo Pessoa Jorge</span>
+        <span class="testimonial-role" data-i18n="tmRole">Founder, Offcoustic - managed Frederico directly</span>
+      </figcaption>
+    </figure>
   </section>
 
   <hr class="divider" />
@@ -971,10 +982,11 @@
         meLabel:"Who You'll Work With",
         meRole:"Founder & operator behind Vantis",
         meBio1:"I'm Frederico - the operator behind Vantis. For the better part of a decade I've built and run operations across FMCG, fintech and manufacturing, in Portugal and across Europe. I've also sat where you sit: I co-founded a company, scaled it to a team of ten, and later made the disciplined call to wind it down when the unit economics didn't hold. The building and the honest reckoning both shape how I work.",
-        meBio2:"Most of what I do is build from zero - operational systems, reporting, logistics, market entries, new product lines. I've launched a category to €150k in its first six months, stood up operations for a manufacturer expanding into the Nordics and the UK, and led the cross-functional teams that delivered it. I work hands-on and close to the work, in three languages, and I care more about being useful than impressive.",
+        meBio2:"Most of what I do is build from zero - operational systems, reporting, logistics, market entries, new product lines. I've launched new product categories from zero, stood up operations for a manufacturer expanding into the Nordics and the UK, and led the cross-functional teams that delivered it. I work hands-on and close to the work, in three languages, and I care more about being useful than impressive.",
         meStat1Num:"8+ yrs", meStat1:"operating across FMCG, fintech & manufacturing",
         meStat2Num:"Founder", meStat2:"built & scaled a company to a team of 10 - then closed it honestly on unit economics",
-        meStat3Num:"€150k", meStat3:"revenue from a new product category in its first six months",
+        tmQuote:'"I started working with Frederico during a hard, challenging growth stage of Offcoustic. We already had our own factory, but we were doubling down on units sold and needed to improve our production capacity, logistics organisation, and delivery across Portugal, Spain, and other countries case by case.<br><br>Frederico is fully autonomous - our production and logistics changed a lot in a 6-9 month period. Customer-facing work is one of his main strengths: he manages complex communication through hard logistics and operations processes."',
+        tmRole:"Founder, Offcoustic - managed Frederico directly",
         investLabel:"Investment", investTitle:"Start with a conversation.<br>Scale from there.",
         investBody:"Every engagement begins with an exploratory session. Packages are scoped to your exact situation - pricing reflects the depth of commitment and the outcomes we agree to deliver together.",
         pack1Tier:"Foundation", pack1Name:"Focus",
@@ -1056,10 +1068,11 @@
         meLabel:"Com Quem Vais Trabalhar",
         meRole:"Fundador e operador por trás da Vantis",
         meBio1:"Sou o Frederico - o operador por trás da Vantis. Durante quase uma década construí e geri operações em FMCG, fintech e indústria, em Portugal e por toda a Europa. Também já estive onde tu estás: co-fundei uma empresa, fi-la crescer até uma equipa de dez pessoas, e mais tarde tomei a decisão disciplinada de a encerrar quando a economia unitária não se sustentava. Tanto a construção como o balanço honesto moldam a forma como trabalho.",
-        meBio2:"Grande parte do que faço é construir de raiz - sistemas operacionais, reporting, logística, entradas em novos mercados, novas linhas de produto. Lancei uma categoria que atingiu 150 000 € nos primeiros seis meses, montei as operações de um fabricante em expansão para os países nórdicos e o Reino Unido, e liderei as equipas multifuncionais que o concretizaram. Trabalho de forma prática e próxima do terreno, em três línguas, e prefiro ser útil a ser impressionante.",
+        meBio2:"Grande parte do que faço é construir de raiz - sistemas operacionais, reporting, logística, entradas em novos mercados, novas linhas de produto. Lancei novas categorias de raiz, montei as operações de um fabricante em expansão para os países nórdicos e o Reino Unido, e liderei as equipas multifuncionais que o concretizaram. Trabalho de forma prática e próxima do terreno, em três línguas, e prefiro ser útil a ser impressionante.",
         meStat1Num:"8+ anos", meStat1:"a construir e gerir operações em FMCG, fintech e indústria",
         meStat2Num:"Fundador", meStat2:"construiu e escalou uma empresa até 10 pessoas - e encerrou-a com honestidade pela economia unitária",
-        meStat3Num:"150 000 €", meStat3:"de receita de uma nova categoria de produto nos primeiros seis meses",
+        tmQuote:'"Comecei a trabalhar com o Frederico numa fase de crescimento difícil e exigente da Offcoustic. Já tínhamos a nossa própria fábrica, mas estávamos a aumentar fortemente as unidades vendidas e precisávamos de melhorar a capacidade de produção, a organização logística e as entregas em Portugal, Espanha e outros países, caso a caso.<br><br>O Frederico é totalmente autónomo - a nossa produção e logística mudaram muito num período de 6 a 9 meses. A relação com o cliente é uma das suas grandes forças: gere comunicação complexa em processos difíceis de logística e operações."',
+        tmRole:"Fundador, Offcoustic - geriu o Frederico diretamente",
         investLabel:"Investimento", investTitle:"Começa com uma conversa.<br>Escala a partir daí.",
         investBody:"Cada compromisso começa com uma sessão exploratória. Os pacotes são dimensionados para a tua situação específica - o preço reflete a profundidade do compromisso e os resultados que acordamos entregar juntos.",
         pack1Tier:"Fundação", pack1Name:"Foco",
