@@ -447,6 +447,10 @@
       font-size: 1rem; color: var(--grove-mid);
       font-family: 'Playfair Display', serif; font-style: italic;
     }
+    .form-error {
+      display: none; padding: 12px 0;
+      font-size: 0.9rem; color: #d98a5a; line-height: 1.5;
+    }
 
     /* shared btn */
     .btn-primary {
@@ -926,6 +930,7 @@
           <button type="submit" class="form-submit" data-i18n="formSubmit">Send - I'll read every word →</button>
           <p class="form-note" data-i18n="formNote">I respond within 24 hours. No spam, ever.</p>
           <p class="form-success" id="formSuccess" data-i18n="formSuccess">Message sent. I'll be in touch shortly.</p>
+          <p class="form-error" id="formError" data-i18n="formError">Something went wrong. Please email me directly at fadaodafonseca@gmail.com.</p>
         </form>
       </div>
     </div>
@@ -1030,6 +1035,7 @@
         formSubmit:"Send - I'll read every word →",
         formNote:"I respond within 24 hours. No spam, ever.",
         formSuccess:"Message sent. I'll be in touch shortly.",
+        formError:"Something went wrong. Please email me directly at fadaodafonseca@gmail.com.",
         footerCopy:"© 2026 Vantis. Operational Consulting for Founders.",
         s_is:" is where the pressure is.", s_and:" and ", s_are:" are your main challenges.",
         s_are3:" are your priorities.", s_all:"You've identified pressure across <strong>all four pillars</strong>.",
@@ -1118,6 +1124,7 @@
         formSubmit:"Enviar - Leio tudo com atenção →",
         formNote:"Respondo em 24 horas. Sem spam, nunca.",
         formSuccess:"Mensagem enviada. Entrarei em contacto em breve.",
+        formError:"Algo correu mal. Envia-me diretamente para fadaodafonseca@gmail.com.",
         footerCopy:"© 2026 Vantis. Consultoria Operacional para Fundadores.",
         s_is:" é onde está a pressão.", s_and:" e ", s_are:" são os teus principais desafios.",
         s_are3:" são as tuas prioridades.", s_all:"Identificaste pressão em <strong>todos os quatro pilares</strong>.",
@@ -1172,23 +1179,42 @@
 
     function submitForm(e) {
       e.preventDefault();
-      const name    = document.getElementById('f-name').value;
-      const email   = document.getElementById('f-email').value;
-      const project = document.getElementById('f-project').value;
-      const pillar  = document.getElementById('f-pillar').value;
-      const message = document.getElementById('f-message').value;
-      const subject = encodeURIComponent('Vantis - Exploratory Session Request');
-      const body    = encodeURIComponent(
-        'Name: ' + name + '\nEmail: ' + email + '\n' +
-        (project ? 'Business/Project: ' + project + '\n' : '') +
-        (pillar  ? 'Primary challenge: ' + pillar  + '\n' : '') +
-        '\n' + message
-      );
-      window.location.href = 'mailto:dico.afonseca@gmail.com?subject=' + subject + '&body=' + body;
-      document.getElementById('contactForm').reset();
-      const s = document.getElementById('formSuccess');
-      s.style.display = 'block';
-      setTimeout(() => { s.style.display = 'none'; }, 5000);
+      const form = document.getElementById('contactForm');
+      const btn  = form.querySelector('.form-submit');
+      const s    = document.getElementById('formSuccess');
+      const err  = document.getElementById('formError');
+      const email = document.getElementById('f-email').value;
+      const name  = document.getElementById('f-name').value;
+      const payload = {
+        Name: name,
+        Email: email,
+        Business: document.getElementById('f-project').value,
+        Challenge: document.getElementById('f-pillar').value,
+        Message: document.getElementById('f-message').value,
+        _subject: 'New Vantis enquiry - ' + (name || 'website'),
+        _replyto: email,
+        _template: 'table',
+        _captcha: 'false'
+      };
+      const label = btn.textContent;
+      btn.disabled = true; btn.style.opacity = '0.6';
+      err.style.display = 'none';
+      fetch('https://formsubmit.co/ajax/fadaodafonseca@gmail.com', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(r => r.json())
+      .then(d => {
+        if (d && (d.success === true || d.success === 'true')) {
+          form.reset();
+          s.style.display = 'block';
+        } else {
+          err.style.display = 'block';
+        }
+      })
+      .catch(() => { err.style.display = 'block'; })
+      .finally(() => { btn.disabled = false; btn.style.opacity = '1'; btn.textContent = label; });
     }
 
     const ro = new IntersectionObserver(entries => {
